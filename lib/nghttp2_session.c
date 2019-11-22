@@ -6519,7 +6519,9 @@ ssize_t nghttp2_session_mem_recv(nghttp2_session *session, const uint8_t *in,
 
       readlen = inbound_frame_payload_readlen(iframe, in, last);
       iframe->payloadleft -= readlen;
-      in += readlen;
+      if (in != NULL) {
+        in += readlen;
+      }
 
       DEBUGF("recv: readlen=%zu, payloadleft=%zu\n", readlen,
              iframe->payloadleft);
