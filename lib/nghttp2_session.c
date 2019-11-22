@@ -5380,7 +5380,10 @@ static ssize_t inbound_frame_effective_readlen(nghttp2_inbound_frame *iframe,
 
 ssize_t nghttp2_session_mem_recv(nghttp2_session *session, const uint8_t *in,
                                  size_t inlen) {
-  const uint8_t *first = in, *last = in + inlen;
+  const uint8_t *first = in, *last = in;
+  if (in != NULL) {
+    last += inlen;
+  }
   nghttp2_inbound_frame *iframe = &session->iframe;
   size_t readlen;
   ssize_t padlen;
